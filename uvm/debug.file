@@ -1,0 +1,10 @@
+class testDriver extends uvm_driver;
+
+	extern function void build_phase(uvm_phase phase);
+
+endclass
+
+function void testDriver::build_phase(uvm_phase phase); // {
+	super.build_phase(phase);
+endfunction // }
+
