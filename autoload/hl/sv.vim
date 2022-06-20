@@ -45,7 +45,7 @@ function! s:LoadDefaultTheme() "{
 	let s:dtype['theme']      = ['gui=bold guifg=#43c6db']
 	let s:buildblock['theme'] = ['gui=bold guifg=#f75d59']
 	let s:codeblock['theme']  = ['gui=bold guifg=#00ced1']
-	let s:selected['theme']   = ['gui=bold guifg=#000000 guibg=#c04000']
+	let s:selected['theme']   = ['guifg=#000000 guibg=#c04000']
 endfunction "}
 
 function! hl#sv#loadtheme() "{
@@ -69,7 +69,7 @@ function! hl#sv#SVselectedGroup(src)
 endfunction
 
 function! hl#sv#moveselection()
-	let a:sep = [',','.','#',' ','(',')',"\t",'[',']','\','=','`',';']
+	let a:sep = [',','.','#',' ','(',')',"\t",'[',']','\','=','`',';',':']
 	let a:word = common#getSelectedWord(a:sep)
 	if b:dshl_selected_defined==1
 		execute 'syntax clear dshl_selected'

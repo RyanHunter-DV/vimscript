@@ -16,6 +16,7 @@ function! common#getSelectedWord(sep)
 	while a:idx > 0
 		let a:char = a:line[a:idx]
 		if common#matchseps(a:char,a:sep)==1
+			let a:idx += 1 " if matched sep, need skip that sep
 			break
 		endif
 		let a:idx -= 1
@@ -29,5 +30,5 @@ function! common#getSelectedWord(sep)
 		endif
 		let a:idx += 1
 	endwhile
-	return a:line[a:prepos+1:a:idx-1]
+	return a:line[a:prepos:a:idx-1]
 endfunction
