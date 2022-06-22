@@ -1,4 +1,3 @@
-let g:indentChar = "\t"
 
 function! uvm#comp#createConnectPhase() " {
 	let a:head = g:indentChar.'extern function void connect_phase(uvm_phase phase);'

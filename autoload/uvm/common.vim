@@ -64,3 +64,27 @@ function! uvm#common#getFilename()
 	endif
 endfunction
 
+function! uvm#common#createFunction(fn,args,rtn) "{
+	let a:head = g:indentChar.'extern function '.a:rtn.' '.a:fn.'('.a:args.');'
+	let a:body = []
+
+	call uvm#common#getClassName()
+	call add(a:body,'function '.a:rtn.' '.b:className.'::'.a:fn.'('.a:args.'); // {')
+	call add(a:body,g:indentChar.'// PLACEHOLDER, auto generated function, add content here')
+	call add(a:body,'endfunction // }')
+
+	call uvm#common#addMethodHead(a:head)
+	call uvm#common#addMethodBody(a:body)
+endfunction "}
+function! uvm#common#createTask(fn,args) "{
+	let a:head = g:indentChar.'extern task '.a:fn.'('.a:args.');'
+	let a:body = []
+
+	call uvm#common#getClassName()
+	call add(a:body,'task '.b:className.'::'.a:fn.'('.a:args.'); // {')
+	call add(a:body,g:indentChar.'// PLACEHOLDER, auto generated task, add content here')
+	call add(a:body,'endtask // }')
+
+	call uvm#common#addMethodHead(a:head)
+	call uvm#common#addMethodBody(a:body)
+endfunction "}

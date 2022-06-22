@@ -9,7 +9,7 @@ function! uvm#syntax#siftSingleComment(cnts)
 		else
 			" if matched from pos 0, then skip current line, else
 			" skip the contents after // only
-			if a:m[0]!=0
+			if a:m[1]!=0
 				call add(a:sifted,a:line[0:a:m[1]-1])
 			endif
 		endif
@@ -39,7 +39,7 @@ endfunction
 
 function! uvm#syntax#getClassName()
 	for a:item in b:siftedCnts
-		let a:m = matchlist(a:item,'^ *class \+\(\w\+\)[;| ]')
+		let a:m = matchlist(a:item,'^ *class \+\(\w\+\)[;| |#]')
 		if !empty(a:m)
 			return a:m[1]
 		endif

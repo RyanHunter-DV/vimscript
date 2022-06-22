@@ -95,6 +95,7 @@ function! s:LoadDefaultTheme() "{
 endfunction "}
 
 function! hl#sv#loadtheme() "{
+	let b:dshl_selected_defined = 0
 	call s:LoadDefaultTheme()
 	call s:DefineSyntax()
 	let a:theme = hl#theme#create()
@@ -110,7 +111,6 @@ function! hl#sv#loadtheme() "{
 	call a:theme.render()
 endfunction "}
 
-let b:dshl_selected_defined = 0
 function! hl#sv#SVselectedGroup(src)
 	let a:words = a:src
 	let b:dshl_selected_defined = 1
