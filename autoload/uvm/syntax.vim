@@ -39,7 +39,7 @@ endfunction
 
 function! uvm#syntax#getClassName()
 	for a:item in b:siftedCnts
-		let a:m = matchlist(a:item,'^ *class \+\(\w\+\)[;| |#]')
+		let a:m = matchlist(a:item,'^\w* *class \+\(\w\+\)[;| |#]')
 		if !empty(a:m)
 			return a:m[1]
 		endif

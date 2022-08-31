@@ -5,7 +5,7 @@ function! uvm#comp#createConnectPhase() " {
 
 	call uvm#common#getClassName()
 	call add(a:body,'function void '.b:className.'::connect_phase(uvm_phase phase); // {')
-	call add(a:body,g:indentChar.'super.build_phase(phase);')
+	call add(a:body,g:indentChar.'super.connect_phase(phase);')
 	call add(a:body,'endfunction // }')
 	call uvm#common#addMethodHead(a:head)
 	call uvm#common#addMethodBody(a:body)
