@@ -1,0 +1,104 @@
+" An example for a vimrc file.
+"
+" Maintainer:	Bram Moolenaar <Bram@vim.org>
+" Last change:	2000 Mar 29
+"
+" To use it, copy it to
+"     for Unix and OS/2:  ~/.vimrc
+"	      for Amiga:  s:.vimrc
+"  for MS-DOS and Win32:  $VIM\_vimrc
+"	    for OpenVMS:  sys$login:.vimrc
+
+" Use Vim settings, rather then Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+set nocompatible
+
+"set nowrap        " Don't wrap long lines
+set autoindent     " Do auto-indenting
+"set nocindent     " But don't do wacky C style indenting
+set bs=2		   " allow backspacing over everything in insert mode
+"set showmatch     " always set showmatch on
+set expandtab      " Use spaces instead of tabs
+set softtabstop=4  " Use spaces instead of tabs
+set ts=4           " If you insist on using tabs, use the same tabstop
+set backup		   " keep a backup file (defaults to .filename~)
+set backupdir=/local_vol1_nobackup/ryanh/backupFromVim
+set backupext=.autobakByVim
+set viminfo='20,\"50  " read/write a .viminfo file, don't store more than 50 lines of registers
+set history=50     " keep 50 lines of command line history
+set ruler          " show the cursor position all the time
+set nu
+" set cursorline
+" set cursorcolumn
+set foldenable
+set foldmethod=marker
+" set foldmarker=##{{{,##}}}
+set foldmarker={,}
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+" if &t_Co > 2 || has("gui_running")
+" endif
+syntax on
+set hlsearch
+set incsearch
+
+if has("autocmd")
+    autocmd BufNewFile,BufRead Makefile set noexpandtab " Makefiles ensure that we don't expand tabs since tabs are special
+	autocmd BufNewFile,BufRead *.rh,*.dj,*.rbx,*.rdl set ft=ruby
+	autocmd BufNewFile,BufRead *.sv* set ft=systemverilog
+	autocmd BufNewFile,BufRead *.wacfg*,*.cfg set ft=xml
+	autocmd BufNewFile,BufRead *.make,*.makefile set ft=make
+	autocmd BufNewFile,BufRead *.v* set ft=verilog
+	autocmd BufNewFile,BufRead *.vim set ft=vim
+endif
+
+
+"" lhs comments -- select a range then hit ,# to insert hash comments
+"" or ,/ for // comments, or ,c to clear comments.
+"map ,# :s/^/#/<CR> <Esc>:nohlsearch <CR>
+"map ,/ :s/^/\/\//<CR> <Esc>:nohlsearch <CR>
+"map ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR> <Esc>:nohlsearch<CR>
+"
+"" wrapping comments -- select a range then hit ,* to put  /* */ around
+"" selection, or ,d to clear them
+"map ,* :s/^\(.*\)$/\/\* \1 \*\//<CR> <Esc>:nohlsearch<CR>
+"map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR> <Esc>:nohlsearch<CR>
+"
+"" to clear hlsearch -- hit ,h to clear highlighting from last search
+"map ,h :nohlsearch <CR>
+
+" RyanH, mappings "
+inoremap s// // @RyanH,
+inoremap st// // @RyanH, TODO, 
+inoremap sq// // @RyanH, QUESTION, 
+inoremap t// // TODO, 
+inoremap s## ## @RyanH,
+inoremap st## ## @RyanH, TODO, 
+inoremap sq## ## @RyanH, QUESTION, 
+inoremap sg## ## @RyanH, GUESS, 
+inoremap /{ // {
+inoremap /} // }
+inoremap ##recmark ## @RyanH, TODO, RECONSTRUCT MARK
+"inoremap ##{ ## {
+"inoremap ##} ## }
+" TODO, inoremap begin<CR> begin // {<CR>
+" TODO, inoremap end<CR> end // }<CR>
+" inoremap fork<CR> fork // {<CR>
+" inoremap join<CR> join // }<CR>
+" inoremap join_none<CR> join_none // }<CR>
+" inoremap join_any<CR> join_any // }<CR>
+
+runtime colors/slate.vim
+hi Search term=standout ctermfg=0 ctermbg=3 guifg=Black guibg=Yellow
+hi Folded term=underline cterm=underline ctermfg=50 guifg=Black guibg=Grey50
+hi clear CursorLine
+hi clear CursorColumn
+hi CursorLine term=reverse ctermbg=242 guibg=Grey20
+hi CursorColumn term=reverse ctermbg=242 guibg=Grey20
+hi clear Comment
+hi Comment term=bold ctermfg=11 guifg=Grey70
+
+packadd! matchit
+colorscheme slate
+" colorscheme murphy
