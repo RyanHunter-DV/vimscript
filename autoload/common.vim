@@ -1,3 +1,12 @@
+function! common#addSVwordsForMatchit()
+    let b:match_words='\<begin\>:\<end\>,'
+    let b:match_words.='\<class\>:\<endclass\>,'
+    let b:match_words.='\<package\>:\<endpackage\>,'
+    let b:match_words.='\<function\>:\<endfunction\>,'
+    let b:match_words.='\<task\>:\<endtask\>,'
+    let b:match_words.='\<case\>:\<endcase\>,'
+    let b:match_words.='\<fork\>:\<join\w*,'
+endfunction
 function! common#matchseps(c,s)
 	for a:item in a:s
 		if a:item==a:c
