@@ -1,8 +1,8 @@
 let s:Theme={'groups':{}}
 "let g:hlTheme = s:Theme
 function!  s:Theme.New()
-	let a:newObj = copy(self)
-	return a:newObj
+	let l:newObj = copy(self)
+	return l:newObj
 endfunction
 
 function! s:Theme.addGroup(name,group)
@@ -10,10 +10,10 @@ function! s:Theme.addGroup(name,group)
 endfunction
 
 function! s:Theme.render()
-	let a:keys   = keys(self.groups)
-	for a:gn in a:keys
-		let a:s = join(self.groups[a:gn],' ')
-		execute printf("hi %s %s",a:gn,a:s)
+	let l:keys   = keys(self.groups)
+	for l:gn in l:keys
+		let l:s = join(self.groups[l:gn],' ')
+		execute printf("hi %s %s",l:gn,l:s)
 	endfor
 endfunction
 

@@ -8,36 +8,36 @@ function! common#addSVwordsForMatchit()
     let b:match_words.='\<fork\>:\<join\w*,'
 endfunction
 function! common#matchseps(c,s)
-	for a:item in a:s
-		if a:item==a:c
+	for l:item in a:s
+		if l:item==a:c
 			return 1
 		endif
 	endfor
 	return 0
 endfunction
 function! common#getSelectedWord(sep)
-	let a:line    = getline('.')
-	let a:currpos = col('.')-1
-	let a:idx = a:currpos
-	if common#matchseps(a:line[a:currpos],a:sep)==1
+	let l:line    = getline('.')
+	let l:currpos = col('.')-1
+	let l:idx = l:currpos
+	if common#matchseps(l:line[l:currpos],a:sep)==1
 		return ''
 	endif
-	while a:idx > 0
-		let a:char = a:line[a:idx]
-		if common#matchseps(a:char,a:sep)==1
-			let a:idx += 1 " if matched sep, need skip that sep
+	while l:idx > 0
+		let l:char = l:line[l:idx]
+		if common#matchseps(l:char,a:sep)==1
+			let l:idx += 1 " if matched sep, need skip that sep
 			break
 		endif
-		let a:idx -= 1
+		let l:idx -= 1
 	endwhile
-	let a:prepos = a:idx
-	let a:idx=a:currpos
-	while a:idx < len(a:line)
-		let a:char = a:line[a:idx]
-		if common#matchseps(a:char,a:sep)==1
+	let l:prepos = l:idx
+	let l:idx=l:currpos
+	while l:idx < len(l:line)
+		let l:char = l:line[l:idx]
+		if common#matchseps(l:char,a:sep)==1
 			break
 		endif
-		let a:idx += 1
+		let l:idx += 1
 	endwhile
-	return a:line[a:prepos:a:idx-1]
+	return l:line[l:prepos:l:idx-1]
 endfunction

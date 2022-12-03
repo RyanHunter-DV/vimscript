@@ -1,21 +1,21 @@
 function! uvm#common#getCurrentLine()
-	let a:pos = getcurpos()
-	return a:pos[1]
+	let l:pos = getcurpos()
+	return l:pos[1]
 endfunction
 
 function! uvm#common#getEndClassLine()
-	let a:cnts = getline(1,'$') 
-	let a:lnum = 1
-	for a:line in a:cnts
-		if matchstr(a:line,'^[ |\t]*endclass') != ""
+	let l:cnts = getline(1,'$') 
+	let l:lnum = 1
+	for l:line in l:cnts
+		if matchstr(l:line,'^[ |\t]*endclass') != ""
 			break
 		endif
-		let a:lnum += 1
+		let l:lnum += 1
 	endfor
-	if a:lnum > len(a:cnts)
+	if l:lnum > len(l:cnts)
 		return 0
 	else
-		return a:lnum
+		return l:lnum
 	endif
 endfunction
 
@@ -24,67 +24,67 @@ function! uvm#common#getClassName()
 endfunction
 
 function! uvm#common#addMethodHead(cnt)
-	let a:currentLine = uvm#common#getCurrentLine()
-	call append(a:currentLine,a:cnt)
+	let l:currentLine = uvm#common#getCurrentLine()
+	call append(l:currentLine,l:cnt)
 endfunction
 
 function! uvm#common#addMethodBody(cnts)
-	let a:endclassLine = uvm#common#getEndClassLine()
+	let l:endclassLine = uvm#common#getEndClassLine()
 
-	echo "endclass: ".a:endclassLine
+	echo "endclass: ".l:endclassLine
 	if b:className=='null'
 		echo "Error, no class name defined"
 		return
 	endif
 	" add blank line
-	let a:idx=0
-	call append(a:endclassLine+a:idx,'')
-	let a:idx+=1
+	let l:idx=0
+	call append(l:endclassLine+l:idx,'')
+	let l:idx+=1
 
-	for a:item in a:cnts
-		call append(a:endclassLine+a:idx,a:item)
-		let a:idx+=1
+	for l:item in l:cnts
+		call append(l:endclassLine+l:idx,l:item)
+		let l:idx+=1
 	endfor
 endfunction
 
 function! uvm#common#addfileheader()
-	let a:fn = uvm#common#getFilename()
-	let a:macro = substitute(a:fn,'\.','__','g')
-	let a:cline = getcurpos()[1]
-	call setline(a:cline,'`ifndef '.a:macro)
-	call setline(a:cline+1,'`define '.a:macro)
-	call setline(a:cline+2,'`endif')
+	let l:fn = uvm#common#getFilename()
+	let l:macro = substitute(l:fn,'\.','__','g')
+	let l:cline = getcurpos()[1]
+	call setline(l:cline,'`ifndef '.l:macro)
+	call setline(l:cline+1,'`define '.l:macro)
+	call setline(l:cline+2,'`endif')
 endfunction
 
 function! uvm#common#getFilename()
-	let a:fline = execute('file')
-	let a:m = matchlist(a:fline,'\"\(.\+\)\"')
-	if !empty(a:m)
-		return a:m[1]
+	let l:fline = execute('file')
+	let l:m = matchlist(l:fline,'\"\(.\+\)\"')
+	if !empty(l:m)
+		return l:m[1]
 	endif
 endfunction
 
 function! uvm#common#createFunction(fn,args,rtn) "{
-	let a:head = g:indentChar.'extern function '.a:rtn.' '.a:fn.'('.a:args.');'
-	let a:body = []
+	let l:head = g:indentChar.'extern function '.a:rtn.' '.a:fn.'('.a:args.');'
+	let l:body = []
 
 	call uvm#common#getClassName()
-	call add(a:body,'function '.a:rtn.' '.b:className.'::'.a:fn.'('.a:args.'); // {')
-	call add(a:body,g:indentChar.'// PLACEHOLDER, auto generated function, add content here')
-	call add(a:body,'endfunction // }')
+	call add(l:body,'function '.a:rtn.' '.b:className.'::'.a:fn.'('.a:args.'); // {')
+	call add(l:body,g:indentChar.'// PLACEHOLDER, auto generated function, add content here')
+	call add(l:body,'endfunction // }')
 
-	call uvm#common#addMethodHead(a:head)
-	call uvm#common#addMethodBody(a:body)
+	call uvm#common#addMethodHead(l:head)
+	call uvm#common#addMethodBody(l:body)
 endfunction "}
 function! uvm#common#createTask(fn,args) "{
-	let a:head = g:indentChar.'extern task '.a:fn.'('.a:args.');'
-	let a:body = []
+	let l:head = g:indentChar.'extern task '.a:fn.'('.a:args.');'
+	let l:body = []
 
 	call uvm#common#getClassName()
-	call add(a:body,'task '.b:className.'::'.a:fn.'('.a:args.'); // {')
-	call add(a:body,g:indentChar.'// PLACEHOLDER, auto generated task, add content here')
-	call add(a:body,'endtask // }')
+	call add(l:body,'task '.b:className.'::'.a:fn.'('.a:args.'); // {')
+	call add(l:body,g:indentChar.'// PLACEHOLDER, auto generated task, add content here')
+	call add(l:body,'endtask // }')
 
-	call uvm#common#addMethodHead(a:head)
-	call uvm#common#addMethodBody(a:body)
+	call uvm#common#addMethodHead(l:head)
+	call uvm#common#addMethodBody(l:body)
 endfunction "}

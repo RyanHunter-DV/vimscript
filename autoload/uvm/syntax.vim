@@ -1,47 +1,47 @@
 
 function! uvm#syntax#siftSingleComment(cnts)
-	let a:sifted = []
-	for a:line in a:cnts
-		let a:len = len(a:line)
-		let a:m = matchstrpos(a:line,'//')
-		if a:m[0]=="" && a:m[1]==-1 && a:m[2]==-1
-			call add(a:sifted,a:line)
+	let l:sifted = []
+	for l:line in a:cnts
+		let l:len = len(l:line)
+		let l:m = matchstrpos(l:line,'//')
+		if l:m[0]=="" && l:m[1]==-1 && l:m[2]==-1
+			call add(l:sifted,l:line)
 		else
 			" if matched from pos 0, then skip current line, else
 			" skip the contents after // only
-			if a:m[1]!=0
-				call add(a:sifted,a:line[0:a:m[1]-1])
+			if l:m[1]!=0
+				call add(l:sifted,l:line[0:l:m[1]-1])
 			endif
 		endif
 	endfor
-	return a:sifted
+	return l:sifted
 endfunction
 
 function! uvm#syntax#siftMultComment(cnts)
-	let a:sifted=[]
-	let a:rawstr = join(a:cnts,"\n")
-	let a:str = substitute(a:rawstr,'\/\*[^\*\/]*\*\/','','g')
-	let a:sifted = split(a:str,"\n")
-	return a:sifted
+	let l:sifted=[]
+	let l:rawstr = join(a:cnts,"\n")
+	let l:str = substitute(l:rawstr,'\/\*[^\*\/]*\*\/','','g')
+	let l:sifted = split(l:str,"\n")
+	return l:sifted
 endfunction
 
 function! uvm#syntax#siftComment(cnts)
-	let a:sifted = []
-	let a:sifted = uvm#syntax#siftSingleComment(a:cnts)
-	let a:sifted = uvm#syntax#siftMultComment(a:sifted)
-	return a:sifted
+	let l:sifted = []
+	let l:sifted = uvm#syntax#siftSingleComment(a:cnts)
+	let l:sifted = uvm#syntax#siftMultComment(l:sifted)
+	return l:sifted
 endfunction
 
 function! uvm#syntax#loadContents()
-	let a:rawCnts = getline(1,'$')
-	return uvm#syntax#siftComment(a:rawCnts)
+	let l:rawCnts = getline(1,'$')
+	return uvm#syntax#siftComment(l:rawCnts)
 endfunction
 
 function! uvm#syntax#getClassName()
-	for a:item in b:siftedCnts
-		let a:m = matchlist(a:item,'^\w* *class \+\(\w\+\)[;| |#]')
-		if !empty(a:m)
-			return a:m[1]
+	for l:item in b:siftedCnts
+		let l:m = matchlist(l:item,'^\w* *class \+\(\w\+\)[;| |#]')
+		if !empty(l:m)
+			return l:m[1]
 		endif
 	endfor
 	return ""
