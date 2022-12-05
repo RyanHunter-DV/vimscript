@@ -51,6 +51,7 @@ if has("autocmd")
 	autocmd BufNewFile,BufRead *.make,*.makefile set ft=make
 	autocmd BufNewFile,BufRead *.v* set ft=verilog
 	autocmd BufNewFile,BufRead *.vim set ft=vim
+	autocmd BufNewFile,BufRead *.rhda set ft=ruby
 endif
 
 
